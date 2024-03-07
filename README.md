@@ -4,7 +4,7 @@ This a simple http server created using golang net package for learning how an h
 
 ## How to use the package
 
-# 1. Start listening
+### 1. Start listening
 To start listening first you have to create an instance of the server with the CreateServer function and then use the ListenAndServer function
 ```go
 
@@ -17,7 +17,7 @@ func main(){
 
 ```
 
-# 2. Adding a route 
+### 2. Adding a route 
 To add a route you can use the AddRoute() function to add a route handler to your server
 
 ```go
@@ -37,7 +37,7 @@ func main(){
 
 ```
 
-# 3. Reading query from request 
+### 3. Reading query from request 
 The queries in the request are stored in request.Request struct as query
 
 ``` go 
@@ -56,7 +56,7 @@ func main(){
 
 ```
 
-# 4. Sending html as text 
+### 4. Sending html as text 
 to send simple html you can use Html function in the request struct
 
 ```go 
@@ -76,7 +76,7 @@ func main(){
 
 ```
 
-# 4. Sending html from a html file 
+### 5. Sending html from a html file 
 to parse and send an html file you can use RenderHtml function in the request struct
 
 ```go 
@@ -95,7 +95,7 @@ func main(){
 
 ```
 
-# 5. Handling different http methods
+### 6. Handling different http methods
 to handle different methods you can use the method field in the Request struct
 
 ```go 
