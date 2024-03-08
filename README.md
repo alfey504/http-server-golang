@@ -122,3 +122,22 @@ func GET(req *request.Request) {
 }
 
 ```
+
+### 6. Adding middleware 
+To add a middleware you can use the AddMiddleware function in Server struct
+
+``` go
+
+func main() {
+	server := server.CreateServer()
+
+	server.AddMiddleware("/name", func(req *request.Request) {
+		//.. middleware functions
+	})
+
+	if err := server.ListenAndServe(); err != nil {
+		panic(err)
+	}
+}
+
+```
