@@ -37,7 +37,7 @@ func (server *Server) ListenAndServe() error {
 		if err != nil {
 			println("Error (server/server.go ListenerAndServe()) -> ", err.Error())
 		}
-		server.handleConn(&conn)
+		go server.handleConn(&conn)
 	}
 }
 
