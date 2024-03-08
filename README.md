@@ -123,7 +123,7 @@ func GET(req *request.Request) {
 
 ```
 
-### 6. Adding middleware 
+### 7. Adding middleware 
 To add a middleware you can use the AddMiddleware function in Server struct
 
 ``` go
