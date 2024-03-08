@@ -7,6 +7,12 @@ import (
 
 func main() {
 	server := server.CreateServer()
+
+	server.AddMiddleware("/name", func(req *request.Request) {
+		req.Query = map[string]string{
+			"henlo": "cheemsu desu",
+		}
+	})
 	server.AddRoute("/name/hello", func(req *request.Request) {
 		switch req.Method {
 		case "GET":
@@ -21,6 +27,9 @@ func main() {
 }
 
 func GET(req *request.Request) {
+	for k, v := range req.Query {
+		println(k, v)
+	}
 	if _, err := req.RenderHtml("templates/index.html"); err != nil {
 		println(err.Error())
 	}

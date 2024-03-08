@@ -22,6 +22,10 @@ func (server *Server) AddRoute(route string, handler func(req *request.Request))
 	server.router.AddRoute(route, handler)
 }
 
+func (server *Server) AddMiddleware(route string, middleware func(req *request.Request)) {
+	server.router.AddMiddleware(route, middleware)
+}
+
 func (server *Server) ListenAndServe() error {
 	listener, err := net.Listen("tcp", ":8080")
 	if err != nil {

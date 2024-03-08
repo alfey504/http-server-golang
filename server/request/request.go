@@ -1,6 +1,7 @@
 package request
 
 import (
+	"encoding/json"
 	"fmt"
 	"net"
 
@@ -118,7 +119,7 @@ func (req *Request) Write(s []byte) (int, error) {
 }
 
 func (req *Request) Html(html string) (int, error) {
-	contentLength := len(html) + 19
+	contentLength := len(html) + 1
 	r := []byte("HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Type: text/html\r\nContent-Length: " + fmt.Sprintf("%d", contentLength) + "\r\n\r\n " + html)
 	return req.Write(r)
 }
@@ -129,7 +130,17 @@ func (req *Request) RenderHtml(dir string) (int, error) {
 		return 0, err
 	}
 
-	contentLength := len(content)
+	contentLength := len(content) + 1
 	r := []byte("HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Type: text/html\r\nContent-Length: " + fmt.Sprintf("%d", contentLength) + "\r\n\r\n " + string(content))
+	return req.Write(r)
+}
+
+func (req *Request) Json(jsonMap map[string]interface{}) (int, error) {
+	jsonString, err := json.Marshal(jsonMap)
+	if err != nil {
+		return 0, err
+	}
+	contentLength := len(jsonString) + 1
+	r := []byte("HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Type: text/json\r\nContent-Length: " + fmt.Sprintf("%d", contentLength) + "\r\n\r\n " + string(jsonString))
 	return req.Write(r)
 }
