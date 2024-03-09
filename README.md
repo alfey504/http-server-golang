@@ -78,21 +78,47 @@ func main(){
 
 ### 5. Sending html from a html file 
 to parse and send an html file you can use RenderHtml function in the request struct
-
+you also have to provide the data as map[string]string which will then be mapped on the template
+in the template wrap the key of the provided data wit {{ key }} for it to be replaced by its value
+ 
 ```go 
 
 func main(){
     myServer := server.CreateServer()
+    
     myServer.AddRoute("/name/hello", func(req *request.Request) {
-        if _, err := req.RenderHtml("templates/index.html"); err != nil {
-			println(err.Error())
-		}
+        data := map[string]string{
+            "testData":           "Konnichiwa",
+            "secondTestData":     "Second Test Data",
+            "yetAnotherTestData": "Yet another test data huh ??",
+        }
+	    if _, err := req.RenderHtml("templates/index.html", data); err != nil {
+		    println(err.Error())
+	    }
     })
+
     if err := myServer.ListenAndServe(); err != nil {
 		panic(err)
 	}
 }
 
+```
+
+``` html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+</head>
+<body>
+    <h1>Test</h1>
+    <div>This is a test {{ testData }}</div>
+    <div>This is an other test {{ secondTestData }}</div>
+    <div>This is yet an other test {{ yetAnotherTestData }} </div>
+</body>
+</html>
 ```
 
 ### 6. Handling different http methods
