@@ -124,8 +124,8 @@ func (req *Request) Html(html string) (int, error) {
 	return req.Write(r)
 }
 
-func (req *Request) RenderHtml(dir string) (int, error) {
-	content, err := templ.LoadTemplate(dir)
+func (req *Request) RenderHtml(dir string, data map[string]string) (int, error) {
+	content, err := templ.LoadTemplate(dir, data)
 	if err != nil {
 		return 0, err
 	}
@@ -135,12 +135,12 @@ func (req *Request) RenderHtml(dir string) (int, error) {
 	return req.Write(r)
 }
 
-func (req *Request) Json(jsonMap map[string]interface{}) (int, error) {
+func (req *Request) Json(jsonMap map[string]interface{}, status int) (int, error) {
 	jsonString, err := json.Marshal(jsonMap)
 	if err != nil {
 		return 0, err
 	}
 	contentLength := len(jsonString) + 1
-	r := []byte("HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Type: text/json\r\nContent-Length: " + fmt.Sprintf("%d", contentLength) + "\r\n\r\n " + string(jsonString))
+	r := []byte("HTTP/1.1 " + fmt.Sprintf("%d", status) + " OK\r\nConnection: close\r\nContent-Type: text/json\r\nContent-Length: " + fmt.Sprintf("%d", contentLength) + "\r\n\r\n " + string(jsonString))
 	return req.Write(r)
 }

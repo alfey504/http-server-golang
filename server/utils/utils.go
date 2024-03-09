@@ -43,3 +43,21 @@ func StripStart(s string) string {
 	}
 	return line
 }
+
+func StripWhiteSpace(s string) string {
+	frontStrip := ""
+	for i := 0; i < len(s); i++ {
+		if s[i] != ' ' {
+			frontStrip = s[i:]
+			break
+		}
+	}
+	strippedString := frontStrip
+	for j := len(frontStrip) - 1; j >= 0; j-- {
+		if frontStrip[j] != ' ' {
+			strippedString = frontStrip[:j+1]
+			break
+		}
+	}
+	return strippedString
+}

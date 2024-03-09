@@ -30,7 +30,12 @@ func GET(req *request.Request) {
 	for k, v := range req.Query {
 		println(k, v)
 	}
-	if _, err := req.RenderHtml("templates/index.html"); err != nil {
+	data := map[string]string{
+		"testData":           "Konnichiwa",
+		"secondTestData":     "Second Test Data",
+		"yetAnotherTestData": "Yet another test data huh ??",
+	}
+	if _, err := req.RenderHtml("templates/index.html", data); err != nil {
 		println(err.Error())
 	}
 }
