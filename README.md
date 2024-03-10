@@ -10,9 +10,10 @@ To start listening first you have to create an instance of the server with the C
 
 func main(){
     myServer := server.CreateServer()
+
     if err := server.ListenAndServe(); err != nil {
-		panic(err)
-	}
+        panic(err)
+    }
 }
 
 ```
@@ -24,15 +25,17 @@ To add a route you can use the AddRoute() function to add a route handler to you
 
 func main(){
     myServer := server.CreateServer()
+
     myServer.AddRoute("/name/hello", func(req *request.Request) {
         someText := []byte("Hello every one how are you fine thank you, OHHHH MYYYYY GAAAHHHHH !!!")
         if _, err := req.Write(someText); err != nil {
             println(err.Error())
         }
     })
-    if err := myServer.ListenAndServe(); err != nil {
-		panic(err)
-	}
+
+    if err := server.ListenAndServe(); err != nil {
+        panic(err)
+    }
 }
 
 ```
@@ -44,14 +47,16 @@ The queries in the request are stored in request.Request struct as query
 
 func main(){
     myServer := server.CreateServer()
+
     myServer.AddRoute("/name/hello", func(req *request.Request) {
         for k, v := range req.Query {
             println(k, " -> ", v)
         }
     })
-    if err := myServer.ListenAndServe(); err != nil {
-		panic(err)
-	}
+
+    if err := server.ListenAndServe(); err != nil {
+        panic(err)
+    }
 }
 
 ```
@@ -63,15 +68,17 @@ to send simple html you can use Html function in the request struct
 
 func main(){
     myServer := server.CreateServer()
+
     myServer.AddRoute("/name/hello", func(req *request.Request) {
         html := []byte("<h1>Hello! Konnichiwa </h1>")
         if _, err := req.Html(html); err != nil {
             println(err.Error())
         }
     })
-    if err := myServer.ListenAndServe(); err != nil {
-		panic(err)
-	}
+
+    if err := server.ListenAndServe(); err != nil {
+        panic(err)
+    }
 }
 
 ```
@@ -128,6 +135,7 @@ to handle different methods you can use the method field in the Request struct
 
 func main(){
     server := server.CreateServer()
+
 	server.AddRoute("/name/hello", func(req *request.Request) {
 		switch req.Method {
 		case "GET":
@@ -136,9 +144,10 @@ func main(){
 			req.Write([]byte("Error 404"))
 		}
 	})
+
 	if err := server.ListenAndServe(); err != nil {
-		panic(err)
-	}
+        panic(err)
+    }
 }
 
 func GET(req *request.Request) {
@@ -162,8 +171,8 @@ func main() {
 	})
 
 	if err := server.ListenAndServe(); err != nil {
-		panic(err)
-	}
+        panic(err)
+    }
 }
 
 ```
@@ -187,8 +196,8 @@ func main() {
 	})
 
 	if err := server.ListenAndServe(); err != nil {
-		panic(err)
-	}
+        panic(err)
+    }
 }
 
 ```
