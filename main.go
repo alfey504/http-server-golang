@@ -6,6 +6,7 @@ import (
 )
 
 func main() {
+
 	server := server.CreateServer()
 
 	newGroup := server.CreateGroup("/name")

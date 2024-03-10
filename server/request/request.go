@@ -125,7 +125,7 @@ func (req *Request) Html(html string) (int, error) {
 }
 
 func (req *Request) RenderHtml(dir string, data map[string]string) (int, error) {
-	content, err := templ.LoadTemplate(dir, data)
+	content, err := templ.LoadTemplateV2(dir, data)
 	if err != nil {
 		return 0, err
 	}

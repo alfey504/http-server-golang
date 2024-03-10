@@ -206,3 +206,41 @@ func main() {
 }
 
 ```
+
+### 9. Components In Html Template
+You can now define component in your html fine using the @<Component(componentName)> content @<ComponentEnd> markdown 
+All your html and outer boiler plate should now be a main component 
+and to insert the component on an html doc you can use !<Component(componentName)>
+
+```html
+
+@<Component(main)>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+</head>
+<body>
+    <h1>Test</h1>
+    <div>This is a test {{ testData }}</div>
+    <div>This is an other test {{ secondTestData }}</div>
+    <div>This is yet an other test {{ yetAnotherTestData }} </div>
+    !<Component(helloComponent)>
+</body>
+</html>
+@<ComponentEnd>
+
+@<Component(helloComponent)>
+<div>
+    <span>Hello there</span><br>
+    !<Component(test)>
+</div>
+@<ComponentEnd>
+
+@<Component(test)>
+<span>Testing</span>
+@<ComponentEnd>
+
+```
