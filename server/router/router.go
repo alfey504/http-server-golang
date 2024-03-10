@@ -22,6 +22,31 @@ func CreateRouteNode(routeName string, handler func(req *request.Request)) Route
 	}
 }
 
+func (routeNode RouteNode) PrintRouteName() {
+	println(routeNode.routeName)
+}
+
+func (routeNode *RouteNode) GetSubRoute(route string) (*RouteNode, error) {
+	subNode, ok := routeNode.subRoute[route]
+	if !ok {
+		return nil, fmt.Errorf("sub route does not exist")
+	}
+	return subNode, nil
+}
+
+func (routeNode *RouteNode) NewSubRoute(route string, newRouteNode *RouteNode) *RouteNode {
+	routeNode.subRoute[route] = newRouteNode
+	return routeNode.subRoute[route]
+}
+
+func (routeNode *RouteNode) AddMiddleware(middleware func(req *request.Request)) {
+	routeNode.middleware = append(routeNode.middleware, middleware)
+}
+
+func (routeNode *RouteNode) SetHandler(handler func(req *request.Request)) {
+	routeNode.handler = handler
+}
+
 type Router struct {
 	root *RouteNode
 }
@@ -30,6 +55,10 @@ func CreateRouter() Router {
 	return Router{
 		root: nil,
 	}
+}
+
+func (router *Router) GetRoot() *RouteNode {
+	return router.root
 }
 
 func (router *Router) AddRoute(route string, handler func(req *request.Request)) {
@@ -111,4 +140,25 @@ func splitRoute(route string) []string {
 	}
 	splitRoute = append(splitRoute, currentRoute)
 	return splitRoute[1:]
+}
+
+func (router *Router) GetNodeAtRoute(route string) *RouteNode {
+	if router.root == nil {
+		routerNode := CreateRouteNode("/", nil)
+		router.root = &routerNode
+	}
+
+	routeArr := splitRoute(route)
+
+	currentNode := router.root
+	for _, r := range routeArr {
+		parent := currentNode
+		currentNode = currentNode.subRoute[r]
+		if currentNode == nil {
+			routerNode := CreateRouteNode(r, nil)
+			parent.subRoute[r] = &routerNode
+			currentNode = parent.subRoute[r]
+		}
+	}
+	return currentNode
 }

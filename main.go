@@ -8,12 +8,14 @@ import (
 func main() {
 	server := server.CreateServer()
 
-	server.AddMiddleware("/name", func(req *request.Request) {
+	newGroup := server.CreateGroup("/name")
+	newGroup.UseMiddleWare(func(req *request.Request) {
 		req.Query = map[string]string{
-			"henlo": "cheemsu desu",
+			"hello": "sudalamani",
+			"vasu":  "mandan",
 		}
 	})
-	server.AddRoute("/name/hello", func(req *request.Request) {
+	newGroup.AddRoute("/hello", func(req *request.Request) {
 		switch req.Method {
 		case "GET":
 			GET(req)

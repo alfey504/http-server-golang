@@ -77,15 +77,15 @@ func main(){
 ```
 
 ### 5. Sending html from a html file 
-to parse and send an html file you can use RenderHtml function in the request struct
-you also have to provide the data as map[string]string which will then be mapped on the template
-in the template wrap the key of the provided data wit {{ key }} for it to be replaced by its value
+to parse and send an html file you can use RenderHtml function in the request struct.
+you also have to provide the data as map[string]string which will then be mapped on to the template.
+In the template wrap the key of the provided data wit {{ key }} for it to be replaced by its value.
  
 ```go 
 
 func main(){
     myServer := server.CreateServer()
-    
+
     myServer.AddRoute("/name/hello", func(req *request.Request) {
         data := map[string]string{
             "testData":           "Konnichiwa",
@@ -159,6 +159,31 @@ func main() {
 
 	server.AddMiddleware("/name", func(req *request.Request) {
 		//.. middleware functions
+	})
+
+	if err := server.ListenAndServe(); err != nil {
+		panic(err)
+	}
+}
+
+```
+
+### 8. Creating groups 
+To create a new group you can use the Server.CreateGroup function
+
+```go
+
+func main() {
+	server := server.CreateServer()
+
+	newGroup := server.CreateGroup("/name")
+
+	newGroup.UseMiddleWare(func(req *request.Request) {
+		//.. middleware
+	})
+
+	newGroup.AddRoute("/hello", func(req *request.Request) {
+		//.. route handling
 	})
 
 	if err := server.ListenAndServe(); err != nil {

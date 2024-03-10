@@ -3,6 +3,7 @@ package server
 import (
 	"net"
 
+	"tcp_http_server.com/server/group"
 	"tcp_http_server.com/server/request"
 	"tcp_http_server.com/server/router"
 )
@@ -60,4 +61,9 @@ func (server *Server) handleConn(conn *net.Conn) {
 	}
 
 	server.router.ExecRoute(request.Route, &request)
+}
+
+func (server *Server) CreateGroup(route string) group.Group {
+	node := server.router.GetNodeAtRoute(route)
+	return group.CreateGroup(node)
 }
