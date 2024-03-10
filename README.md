@@ -104,9 +104,9 @@ func main(){
 	    }
     })
 
-    if err := myServer.ListenAndServe(); err != nil {
-		panic(err)
-	}
+    if err := server.ListenAndServe(); err != nil {
+        panic(err)
+    }
 }
 
 ```
@@ -145,7 +145,7 @@ func main(){
 		}
 	})
 
-	if err := server.ListenAndServe(); err != nil {
+    if err := server.ListenAndServe(); err != nil {
         panic(err)
     }
 }
@@ -170,7 +170,7 @@ func main() {
 		//.. middleware functions
 	})
 
-	if err := server.ListenAndServe(); err != nil {
+    if err := server.ListenAndServe(); err != nil {
         panic(err)
     }
 }
@@ -195,7 +195,7 @@ func main() {
 		//.. route handling
 	})
 
-	if err := server.ListenAndServe(); err != nil {
+    if err := server.ListenAndServe(); err != nil {
         panic(err)
     }
 }
