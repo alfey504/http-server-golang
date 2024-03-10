@@ -23,6 +23,7 @@ func (server *Server) AddRoute(route string, handler func(req *request.Request))
 	server.router.AddRoute(route, handler)
 }
 
+// Deprecated : use group and and group.UseMiddleware
 func (server *Server) AddMiddleware(route string, middleware func(req *request.Request)) {
 	server.router.AddMiddleware(route, middleware)
 }
