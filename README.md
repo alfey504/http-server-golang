@@ -67,6 +67,7 @@ to send simple html you can use Html function in the request struct
 ```go 
 
 func main(){
+    
     myServer := server.CreateServer()
 
     myServer.AddRoute("/name/hello", func(req *request.Request) {
@@ -94,11 +95,13 @@ func main(){
     myServer := server.CreateServer()
 
     myServer.AddRoute("/name/hello", func(req *request.Request) {
+        
         data := map[string]string{
             "testData":           "Konnichiwa",
             "secondTestData":     "Second Test Data",
             "yetAnotherTestData": "Yet another test data huh ??",
         }
+
 	    if _, err := req.RenderHtml("templates/index.html", data); err != nil {
 		    println(err.Error())
 	    }
@@ -106,7 +109,7 @@ func main(){
 
     if err := server.ListenAndServe(); err != nil {
         panic(err)
-    }
+    }   
 }
 
 ```
@@ -134,16 +137,17 @@ to handle different methods you can use the method field in the Request struct
 ```go 
 
 func main(){
+    
     server := server.CreateServer()
 
-	server.AddRoute("/name/hello", func(req *request.Request) {
-		switch req.Method {
-		case "GET":
-			GET(req)
-		default:
-			req.Write([]byte("Error 404"))
-		}
-	})
+    server.AddRoute("/name/hello", func(req *request.Request) {
+	    switch req.Method {
+	    case "GET":
+		    GET(req)
+	    default:
+            req.Write([]byte("Error 404"))
+	    }
+    })
 
     if err := server.ListenAndServe(); err != nil {
         panic(err)
@@ -151,7 +155,7 @@ func main(){
 }
 
 func GET(req *request.Request) {
-	if _, err := req.RenderHtml("templates/index.html"); err != nil {
+    if _, err := req.RenderHtml("templates/index.html"); err != nil {
 		println(err.Error())
 	}
 }
@@ -164,12 +168,12 @@ To add a middleware you can use the AddMiddleware function in Server struct
 ``` go
 
 func main() {
-	server := server.CreateServer()
+    server := server.CreateServer()
 
-	server.AddMiddleware("/name", func(req *request.Request) {
-		//.. middleware functions
-	})
-
+    server.AddMiddleware("/name", func(req *request.Request) {
+	    //.. middleware functions
+    })
+    
     if err := server.ListenAndServe(); err != nil {
         panic(err)
     }
@@ -183,17 +187,18 @@ To create a new group you can use the Server.CreateGroup function
 ```go
 
 func main() {
-	server := server.CreateServer()
+    
+    server := server.CreateServer()
 
-	newGroup := server.CreateGroup("/name")
+    newGroup := server.CreateGroup("/name")
 
-	newGroup.UseMiddleWare(func(req *request.Request) {
-		//.. middleware
-	})
+    newGroup.UseMiddleWare(func(req *request.Request) {
+	    //.. middleware
+    })
 
-	newGroup.AddRoute("/hello", func(req *request.Request) {
-		//.. route handling
-	})
+    newGroup.AddRoute("/hello", func(req *request.Request) {
+	    //.. route handling
+    })
 
     if err := server.ListenAndServe(); err != nil {
         panic(err)
