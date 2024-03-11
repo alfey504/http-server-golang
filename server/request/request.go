@@ -124,7 +124,7 @@ func (req *Request) Html(html string) (int, error) {
 	return req.Write(r)
 }
 
-func (req *Request) RenderHtml(dir string, data map[string]string) (int, error) {
+func (req *Request) RenderHtml(dir string, data map[string]interface{}) (int, error) {
 	content, err := templ.LoadTemplateV2(dir, data)
 	if err != nil {
 		return 0, err

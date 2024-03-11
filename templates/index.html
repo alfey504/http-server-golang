@@ -11,6 +11,9 @@
     <h1>Test</h1>
     <div>This is a test {{ testData }}</div>
     <div>This is an other test {{ secondTestData }}</div>
+    {% value -> val : 
+        <div> My name is ${val} </div> 
+    %}
     <div>This is yet an other test {{ yetAnotherTestData }} </div>
     !<Component(helloComponent)>
 </body>
