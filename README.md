@@ -264,26 +264,12 @@ you can use {% key -> variableName : <html>${variableName}</html> %} to map over
 </head>
 <body>
     <h1>Test</h1>
-    <div>This is a test {{ testData }}</div>
-    <div>This is an other test {{ secondTestData }}</div>
     {% value -> val : 
         <div> My name is ${val} </div> 
     %}
-    <div>This is yet an other test {{ yetAnotherTestData }} </div>
-    !<Component(helloComponent)>
 </body>
 </html>
 @<ComponentEnd>
 
-@<Component(helloComponent)>
-<div>
-    <span>Hello there</span><br>
-    !<Component(test)>
-</div>
-@<ComponentEnd>
-
-@<Component(test)>
-<span>Testing</span>
-@<ComponentEnd>
 
 ```

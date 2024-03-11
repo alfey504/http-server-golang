@@ -38,6 +38,7 @@ func GET(req *request.Request) {
 		"secondTestData":     "Second Test Data",
 		"yetAnotherTestData": "Yet another test data huh ??",
 		"value":              []string{"hello", "how are you", "fine thank you"},
+		"names":              []string{"Bartholomew", "Brad", "Joe", "Sudalamami"},
 	}
 	if _, err := req.RenderHtml("templates/index.html", data); err != nil {
 		println(err.Error())
