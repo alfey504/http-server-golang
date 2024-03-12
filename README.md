@@ -273,3 +273,15 @@ you can use {% key -> variableName : <html>${variableName}</html> %} to map over
 
 
 ```
+
+### statics folder
+You can now save your static files like css on statics folder on the project root 
+
+``` dir
+|project
+    |statics
+        |style.css
+    |templates
+        |index.html
+    ....
+```
