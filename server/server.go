@@ -60,7 +60,6 @@ func (server *Server) handleConn(conn *net.Conn) {
 	if err != nil {
 		println(err.Error())
 	}
-
 	server.router.ExecRoute(request.Route, &request)
 }
 

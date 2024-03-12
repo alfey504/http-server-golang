@@ -144,3 +144,9 @@ func (req *Request) Json(jsonMap map[string]interface{}, status int) (int, error
 	r := []byte("HTTP/1.1 " + fmt.Sprintf("%d", status) + " OK\r\nConnection: close\r\nContent-Type: text/json\r\nContent-Length: " + fmt.Sprintf("%d", contentLength) + "\r\n\r\n " + string(jsonString))
 	return req.Write(r)
 }
+
+func (req *Request) Http(status int, content []byte) (int, error) {
+	contentLength := len(content) + 1
+	r := []byte("HTTP/1.1 " + fmt.Sprintf("%d", status) + " OK\r\nConnection: close\r\nContent-Type: text/css\r\nContent-Length: " + fmt.Sprintf("%d", contentLength) + "\r\n\r\n " + string(content))
+	return req.Write(r)
+}

@@ -2,6 +2,10 @@ package router
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
+	"runtime"
+	"strings"
 
 	"tcp_http_server.com/server/request"
 )
@@ -106,6 +110,11 @@ func (router *Router) AddMiddleware(route string, middleware func(req *request.R
 func (router Router) ExecRoute(route string, req *request.Request) error {
 	routes := splitRoute(route)
 
+	if len(routes) > 0 && routes[0] == "statics" {
+		handleStaticRoute(req)
+		return nil
+	}
+
 	if router.root == nil {
 		return fmt.Errorf("route does not exist")
 	}
@@ -161,4 +170,22 @@ func (router *Router) GetNodeAtRoute(route string) *RouteNode {
 		}
 	}
 	return currentNode
+}
+
+func handleStaticRoute(req *request.Request) {
+	routes := splitRoute(req.Route)
+	dir := getStaticRoute() + "/statics/" + strings.Join(routes[1:], "/")
+	content, err := os.ReadFile(dir)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	if _, err := req.Http(200, content); err != nil {
+		fmt.Println(err.Error())
+
+	}
+}
+
+func getStaticRoute() string {
+	_, b, _, _ := runtime.Caller(0)
+	return filepath.Join(filepath.Dir(b), "../..")
 }
